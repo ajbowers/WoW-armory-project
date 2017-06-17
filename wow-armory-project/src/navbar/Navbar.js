@@ -4,7 +4,7 @@ import './Navbar.css';
 class Navbar extends Component {
   render() {
     return (
-      <div className="Navbar">
+      <div className="navbar-container">
         <div className="navbar-dropdown"> 
             <p> Home </p>
         </div>

@@ -7,10 +7,9 @@
 }
 
 .navbar-dropdown:hover {
-  background-color: #229;
+  background-color: rgba(230, 0,0, .8);
 }
-
-.Navbar {
-    
-
+.navbar-container {
+    height: 50px;
+    background-color: rgba(230, 0,0, 0.6);
 }
