@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
 import './Navbar.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 
 class Navbar extends Component {
   render() {
     return (
       <div className="navbar-container">
         <div className="navbar-dropdown"> 
-            <p> Home </p>
+            <p> <Link to="/"> Home </Link></p>
         </div>
         <div className="navbar-dropdown"> 
-            <p> Characters </p>
+            <p> <Link to="/characters"> Characters </Link></p>
         </div>
         <div className="navbar-dropdown"> 
-            <p> Guilds </p>
+            <p> <Link to="/guilds"> Guilds </Link></p>
         </div>
         <div className="navbar-dropdown"> 
             <p> Raid Progress </p>
