@@ -1,0 +1,16 @@
+.navbar-dropdown {
+    float:left;
+    width: 20%;
+    color: white;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar-dropdown:hover {
+  background-color: #229;
+}
+
+.Navbar {
+    
+
+}
