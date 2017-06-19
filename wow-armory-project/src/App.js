@@ -6,6 +6,7 @@ import Character from './characters/Character.js';
 import Guild from './guilds/Guild.js';
 import Home from './home/Home.js';
 import axios from 'axios';
+import api from 'config.json';
 
 import {
   BrowserRouter as Router,
@@ -13,7 +14,7 @@ import {
   Link
 } from 'react-router-dom'
 
-let apiUrl = "https://us.api.battle.net/wow/guild/Wyrmrest-Accord/Equanimity?fields=members&locale=en_US&apikey=zcq8e9k5a4mqgucv2u5rb2jbcq4dyzmr";
+console.log(api);
 
 class App extends Component {
   render() {

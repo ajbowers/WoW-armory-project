@@ -1,0 +1,9 @@
+{
+    "api" : {
+        "apiKey": "zcq8e9k5a4mqgucv2u5rb2jbcq4dyzmr",
+        "apiRoot": "https://us.api.battle.net/wow/",
+        "apiGuildPath": "guild/",
+        "apiCharacterPath": "character/",
+        "apiLocaleString": "locale=en_US"
+    }
+}
