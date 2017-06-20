@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import ReactDataGrid from 'react-data-grid';
 import './Guild.css';
+import apiConfig from '../config.json';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-let apiUrl = "https://us.api.battle.net/wow/guild/Wyrmrest-Accord/Equanimity?fields=members&locale=en_US&apikey=zcq8e9k5a4mqgucv2u5rb2jbcq4dyzmr";
+
+let api = apiConfig.api;
 
 
 class Guilds extends Component {
@@ -24,35 +26,51 @@ class Guilds extends Component {
       {key: 'character.name', name:'Character Name'},
       {key: 'character.race', name:'Race'},
       {key: 'character.gender', name:'Gender'}
-    ]
+    ];
+  } 
+
+  buildUrl() {
+    var api_root  = api.apiRoot;
+    var path      = api.apiGuildPath;
+    var locale    = api.apiLocaleString;
+    var key       = api.apiKey;
+    var field     = "members";
+    var guildName = "Equanimity";
+    var realm     = "Wyrmrest-Accord/";
+    var apiUrl    = api_root + path + realm + guildName + "?fields=" + field + "&" + locale + "&apikey=" + key;
+    return apiUrl;
   }
 
   componentDidMount() {
-    axios.get(apiUrl)
-      .then(res => {
-        const guild = res.data        
+    axios.get(this.buildUrl())
+      .then(res => {       
         this.setState({ 
           guild: res.data.name,
           realm: res.data.realm,
           members: res.data.members
-        },()=>{
-          console.log(this.state.members[0]);
-        });
+        })
     });
-  }
+  } 
 
   render() {
     //make call to generate table
-    let membersDisplay = this.state.members.map((member, index)=> {
+    let membersTest = this.state.members;
+    const rowGetter = rowNumber => membersTest[rowNumber];
+    /*let membersDisplay = membersTest.map((member, index)=> {
       return (
         <div key={index}>
-          <ReactDataGrid columns={this.guild_member_columns} />
-
+          
         </div>
       );
-    });
+    }); */
     return (
-      <div> {membersDisplay} </div>
+      <div> 
+        <ReactDataGrid 
+              columns={this.guild_member_columns}
+              rowGetter={rowGetter}
+              rowsCount={membersTest.length}
+          />
+      </div>
     );
   }
 }
