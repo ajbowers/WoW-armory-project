@@ -20,7 +20,7 @@ class Navbar extends Component {
             <p> <Link to="/guilds"> Guilds </Link></p>
         </div>
         <div className="navbar-dropdown"> 
-            <p> Raid Progress </p>
+            <p> <Link to="/raidprogress"> Raid Progress </Link></p>
         </div>
         <div className="navbar-dropdown"> 
             <p> Settings </p>

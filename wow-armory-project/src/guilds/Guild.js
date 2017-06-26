@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import FixedDataTable from 'fixed-data-table';
-import './Guild.css';
-import apiConfig from '../config.json';
+import * as ApiUtility from '../api_utility/ApiUtility.js';
 
+import './Guild.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
-
-let api = apiConfig.api;
 const {Table, Column, Cell} = FixedDataTable;
 class Guilds extends Component {
 
@@ -55,33 +53,36 @@ class Guilds extends Component {
     ]
   }
 
+  /* Converts class api code into string */
   convertClass(members) {
-    let convertedMembers = members;
-    for (var i = 0; i < convertedMembers.length; i++) {
+    let classConvert = members;
+    for (var i = 0; i < classConvert.length; i++) {
       for (var j = 0; j < this.class_map.length; j++ ) {
         if (this.class_map[j].id == members[i].class) {
-          convertedMembers[i].class = this.class_map[j].class;
+          classConvert[i].class = this.class_map[j].class;
           break;
         }
       }
     }
-    return convertedMembers;
+    return classConvert;
   }
 
+  /* Converts race api code into string race */
   convertRace(members) {
-    let convertedMembers = members;
-     for (var i = 0; i < convertedMembers.length; i++) {
+    let raceConvert = members;
+     for (var i = 0; i < raceConvert.length; i++) {
       for (var j = 0; j < this.race_map.length; j++ ) {
         if (this.race_map[j].id == members[i].race) {
-          convertedMembers[i].race = this.race_map[j].race;
+          raceConvert[i].race = this.race_map[j].race;
           break;
         }
       }
     }
     
-    return convertedMembers;
+    return raceConvert;
   }
 
+  /* Converts gender api code into string */
   convertGender(members) {
     let genderConvert = members;
     for (var i = 0; i < members.length; i++) {
@@ -110,30 +111,21 @@ class Guilds extends Component {
     for (let i = 0; i < members.length; i++) {
       temp.push({
         id: i,
-        name: members[i].character.name,
-        race: members[i].character.race,
+        name:              members[i].character.name,
+        race:              members[i].character.race,
         achievementPoints: members[i].character.achievementPoints,
-        thumbnail: 'http://us.battle.net/static-render/us/' + members[i].character.thumbnail,
-        class: members[i].character.class,
-        gender: members[i].character.gender
+        thumbnail:         'http://us.battle.net/static-render/us/' + members[i].character.thumbnail,
+        class:             members[i].character.class,
+        gender:            members[i].character.gender
       });
     }
     return temp;
   }
-  buildUrl() {
-    var api_root = api.apiRoot;
-    var path = api.apiGuildPath;
-    var locale = api.apiLocaleString;
-    var key = api.apiKey;
-    var field = "members";
-    var guildName = "Equanimity";
-    var realm = "Wyrmrest-Accord/";
-    var apiUrl = api_root + path + realm + guildName + "?fields=" + field + "&" + locale + "&apikey=" + key;
-    return apiUrl;
-  }
 
+  /* Request data from WoW API */
   componentDidMount() {
-    axios.get(this.buildUrl())
+    let fields = ["members"];
+    axios.get(ApiUtility.determineApiCall("guild","Wyrmrest-Accord", "Equanimity", "", fields))
       .then(res => {
         this.setState({
           guild: res.data.name,
@@ -143,29 +135,16 @@ class Guilds extends Component {
       });
   } 
 
-  
-
   render() {
     let strippedMembers = this.stripUneededDetails(this.state.members);
-    let finalMembers = this.convertGenderAndRaceToString(strippedMembers);
+    let finalMembers    = this.convertGenderAndRaceToString(strippedMembers);
     return (
       <Table
         rowsCount={this.state.members.length}
         rowHeight={100}
         headerHeight={50}
-        height={1000}
+        maxHeight={800}
         width={1500}>
-         <Column
-          header={<Cell> Avatar </Cell>}
-          cell={props => (
-            <Cell {...props}>
-              <img src={finalMembers[props.rowIndex].thumbnail} />
-            </Cell>
-          )}
-          fixed={true}
-          width={100}
-          height={100}
-        />
         <Column
           header={<Cell>Name</Cell>}
           cell={props => (
