@@ -1,8 +1,4 @@
-import React, { Component } from 'react';
 import apiConfig from '../config.json';
-import axios from 'axios';
-
-
 let api = apiConfig.api;
 /**
  *  Helper utility to build API from different parameters
@@ -31,10 +27,10 @@ export function generateFieldsString(fields) {
 export function determineApiCall(type, realm, guild_name, character_name, fields) {
     let path = '';
     let _fields = generateFieldsString(fields);
-    if (type == 'character') {
+    if (type === 'character') {
         path = api.apiCharacterPath;
         return buildUrl(character_name, path, _fields, realm);
-    } else if (type == 'guild') {
+    } else if (type === 'guild') {
         path = api.apiGuildPath;
         return buildUrl(guild_name, path, _fields, realm);
     }

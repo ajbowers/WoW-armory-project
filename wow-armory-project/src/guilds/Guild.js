@@ -58,7 +58,7 @@ class Guilds extends Component {
     let classConvert = members;
     for (var i = 0; i < classConvert.length; i++) {
       for (var j = 0; j < this.class_map.length; j++ ) {
-        if (this.class_map[j].id == members[i].class) {
+        if (this.class_map[j].id === members[i].class) {
           classConvert[i].class = this.class_map[j].class;
           break;
         }
@@ -72,7 +72,7 @@ class Guilds extends Component {
     let raceConvert = members;
      for (var i = 0; i < raceConvert.length; i++) {
       for (var j = 0; j < this.race_map.length; j++ ) {
-        if (this.race_map[j].id == members[i].race) {
+        if (this.race_map[j].id === members[i].race) {
           raceConvert[i].race = this.race_map[j].race;
           break;
         }
@@ -86,7 +86,7 @@ class Guilds extends Component {
   convertGender(members) {
     let genderConvert = members;
     for (var i = 0; i < members.length; i++) {
-      if (this.gender_map[0].id == genderConvert[i].gender) {
+      if (this.gender_map[0].id === genderConvert[i].gender) {
         genderConvert[i].gender = this.gender_map[0].gender;
       } else {
         genderConvert[i].gender = this.gender_map[1].gender;
