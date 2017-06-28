@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import * as ApiUtility from '../api_utility/ApiUtility.js';
+import * as CharacterUtility from './character_utils/CharacterUtility.js';
 import './Character.css';
 
 import { Row, Col } from 'react-bootstrap';
@@ -16,47 +17,11 @@ class Character extends Component {
   constructor(props) {
     super(props);
 
-
-
     this.state = {
       character: [],
       items: [],
       achievements: []
     }
-
-    this.gender_map = [
-      { id: "0", gender: "Male" },
-      { id: "1", gender: "Female" }
-    ];
-
-    this.race_map = [
-      { id: "1", race: "temp" },
-      { id: "2", race: "Orc" },
-      { id: "3", race: "temp" },
-      { id: "4", race: "temp" },
-      { id: "5", race: "Undead" },
-      { id: "6", race: "Tauren" },
-      { id: "7", race: "temp" },
-      { id: "8", race: "Troll" },
-      { id: "9", race: "Goblin" },
-      { id: "10", race: "Blood Elf" },
-      { id: "26", race: "Pandarian" }
-    ];
-
-    this.class_map = [
-      { id: "1", class: "Warrior" },
-      { id: "2", class: "Paladin" },
-      { id: "3", class: "Hunter" },
-      { id: "4", class: "Rogue" },
-      { id: "5", class: "Priest" },
-      { id: "6", class: "Death Knight" },
-      { id: "7", class: "Shaman" },
-      { id: "8", class: "Mage" },
-      { id: "9", class: "Warlock" },
-      { id: "10", class: "Monk" },
-      { id: "11", class: "Druid" },
-      { id: "12", class: "Demon Hunter" },
-    ]
 
     this.forge_map = [
       {id: 3570, value: "Legendary"},
@@ -234,8 +199,7 @@ class Character extends Component {
     var item_card_style = {
       fontSize: 16,
       textAlign: _side,
-      borderTop: 1,
-      borderBottom:1,
+      height: 60,
       padding: 5
     };
 
@@ -252,14 +216,14 @@ class Character extends Component {
     }
 
     var icon_style = {
-      float: _side,
-      verticalAlign: 'middle',
       border: '2px solid'
     };
 
     var icon_wrapper = {
-      paddingLeft: 10,
-      paddingRight:10
+      verticalAlign: 'middle',
+      paddingLeft:10, 
+      paddingRight:10,
+      float: _side
     }
 
     var item_level_style = {
@@ -284,7 +248,7 @@ class Character extends Component {
   componentWillMount() {
     let fields = ["items", "achievements"];
     //BjÖrdin
-    axios.get(ApiUtility.determineApiCall("character", "Wyrmrest-Accord", "", "Daze", fields))
+    axios.get(ApiUtility.determineApiCall("character", "Wyrmrest-Accord", "", "Neelis", fields))
       .then(res => {
         this.setState({
           character: res.data,
@@ -300,10 +264,24 @@ class Character extends Component {
     if (this.state.is_loaded === true) {
       let character = this.state.character;
       let items = this.state.items;
-      console.log(items);
+      var url = "https://render-us.worldofwarcraft.com/character/wyrmrest-accord/150/126752662-main.jpg";
+      var character_page_style = {
+        backgroundImage: "url(" + url + ")",
+        position: 'absolute',
+        backgroundSize: 'auto',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        top: 100,
+        right: 0, 
+        bottom: 0, 
+        left: 0
+      }
+
+      console.log(character);
       return (
-        <div class="character_overview">
+        <div style={character_page_style}>
           <h3 class="character_name"> {character.name} </h3>
+          <h4 class="character_race"> </h4>
           <h4> {items.averageItemLevel} Avg. Item Level</h4>
           <Row className="show-grid">
             <Col xs={6} md={4}> {this.createItem("head", "left")}</Col>
